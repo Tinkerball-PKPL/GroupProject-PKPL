@@ -21,4 +21,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('login/', views.login_google, name='login'),
+    path('callback/', views.callback, name='callback'), # URL callback dari Google
+    path('logout/', views.logout, name='logout'),
 ]

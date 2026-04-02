@@ -244,13 +244,30 @@
 
     <nav>
         <div class="logo">
-            <img src="tinkerbell.png" alt="TinkerBell" style="height: 40px; width: auto; display: block;">
+            <img src="/static/tinkerbell.png" alt="TinkerBell" style="height: 40px; width: auto; display: block;">
             TinkerBell
         </div>
-        <button id="loginBtn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
-            Login with Google
-        </button>
+
+        {% if user_email %}
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="text-align: right;">
+                    <p style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin: 0;">
+                        {{ user_name }}
+                    </p>
+                    <p style="font-size: 0.7rem; color: var(--primary-accent); margin: 0;">
+                        {{ user_email }}
+                    </p>
+                </div>
+                <a href="/logout/" style="text-decoration: none; background-color: #fee2e2; color: #ef4444; padding: 6px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; border: 1px solid #fecaca;">
+                    Logout
+                </a>
+            </div>
+        {% else %}
+            <button id="loginBtn" onclick="window.location.href='/login/'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
+                Login with Google
+            </button>
+        {% endif %}
     </nav>
 
     <header class="hero">
@@ -266,7 +283,7 @@
             <div class="card-strip"></div>
             <div class="card-body">
                 <div class="photo-wrap">
-                    <img src="foto_febi.jpg" alt="Febriyanti">
+                    <img src="/static/foto_febi.jpg" alt="Febriyanti">
                 </div>
                 <div class="role">Team Leader</div>
                 <h3>Febriyanti</h3>
@@ -279,7 +296,7 @@
             <div class="card-strip"></div>
             <div class="card-body">
                 <div class="photo-wrap">
-                    <img src="foto_aghnaya.jpg" alt="Aghnaya">
+                    <img src="/static/foto_aghnaya.jpg" alt="Aghnaya">
                 </div>
                 <div class="role">Member</div>
                 <h3>Aghnaya Kenarantanov</h3>
@@ -292,7 +309,7 @@
             <div class="card-strip"></div>
             <div class="card-body">
                 <div class="photo-wrap">
-                    <img src="foto_delila.jpg" alt="Niera">
+                    <img src="/static/foto_delila.jpg" alt="Niera">
                 </div>
                 <div class="role">Member</div>
                 <h3>Delila Isrina Aroyo</h3>
@@ -305,7 +322,7 @@
             <div class="card-strip"></div>
             <div class="card-body">
                 <div class="photo-wrap">
-                    <img src="foto_khalisa.jpg" alt="Khalisa">
+                    <img src="/static/foto_khalisa.jpg" alt="Khalisa">
                 </div>
                 <div class="role">Member</div>
                 <h3>Khalisa Adzkiyah</h3>
@@ -318,7 +335,7 @@
             <div class="card-strip"></div>
             <div class="card-body">
                 <div class="photo-wrap">
-                    <img src="foto_niera.jpg" alt="Niera">
+                    <img src="/static/foto_niera.jpg" alt="Niera">
                 </div>
                 <div class="role">Member</div>
                 <h3>Gusti Niera FA</h3>
