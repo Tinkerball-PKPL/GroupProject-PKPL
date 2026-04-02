@@ -59,7 +59,7 @@ ROOT_URLCONF = 'web_pkpl.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,3 +120,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+GOOGLE_CLIENT_ID     = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI  = os.getenv("GOOGLE_REDIRECT_URI", "http://localhost:8000/callback/")
+ 
+# Keamanan session
+SESSION_COOKIE_HTTPONLY = True   # JS tidak bisa akses cookie session
+SESSION_COOKIE_SECURE   = False  # Ganti True kalau sudah pakai HTTPS
+SESSION_COOKIE_SAMESITE = "Lax"  # Proteksi CSRF tambahan

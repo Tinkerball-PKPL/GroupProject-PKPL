@@ -1,0 +1,11 @@
+# Virtual Environment
+env/
+venv/
+__pycache__/
+
+# Secrets & Config
+.env
+db.sqlite3
+
+# OS stuff
+.DS_Store
