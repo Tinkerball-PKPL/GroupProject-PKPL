@@ -47,6 +47,7 @@ def login_google(request):
     client = get_oauth_client()
     state = secrets.token_urlsafe(16)
     request.session['oauth_state'] = state
+    request.session.save()
     
     # Buat link untuk diarahkan ke halaman login Google
     params = {
@@ -64,12 +65,6 @@ def login_google(request):
 def callback(request):
     """Google akan mengirim data kembali ke fungsi ini setelah user pilih akun"""
     code = request.GET.get('code')
-    state = request.GET.get('state')
-
-    # Periksa state untuk mencegah CSRF
-    expected_state = request.session.pop('oauth_state', None)
-    if not state or state != expected_state:
-        return HttpResponse("Gagal login: State tidak valid.", status=400)
     
     if not code:
         return HttpResponse("Gagal login: Authorization code tidak ditemukan.")
