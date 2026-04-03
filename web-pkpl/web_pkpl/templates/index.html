@@ -17,6 +17,105 @@
             --primary-dark: #059669;
             --secondary-accent: #d1fae5;
             --font-main: 'Inter', sans-serif;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --nav-border: #e2e8f0;
+            --card-border: #f1f5f9;
+            --npm-bg: #f8fafc;
+            --npm-border: #e8edf2;
+            --footer-bg: #ffffff;
+            --footer-border: #e2e8f0;
+        }
+
+        /* ── Dark Mode Variables ── */
+        body.dark {
+            --bg-color: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-light: #64748b;
+            --card-bg: #1e293b;
+            --secondary-accent: #064e3b;
+            --nav-bg: rgba(15, 23, 42, 0.9);
+            --nav-border: #1e293b;
+            --card-border: #334155;
+            --npm-bg: #0f172a;
+            --npm-border: #334155;
+            --footer-bg: #1e293b;
+            --footer-border: #334155;
+        }
+
+        /* ── Dark Mode Toggle Panel ── */
+        .edit-panel-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        /* Toggle Switch */
+        .toggle-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toggle-icon {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #cbd5e1;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--primary-accent);
+        }
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+        .member-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-accent);
+            background: var(--secondary-accent);
+            padding: 3px 10px;
+            border-radius: 999px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,6 +127,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Smooth dark mode transitions */
+        body, nav, .card, footer, .npm-badge { transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+
         /* Navbar */
         nav {
             display: flex;
@@ -35,9 +137,9 @@
             align-items: center;
             padding: 0.75rem 5%;
             height: auto;
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: var(--nav-bg);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--nav-border);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -129,9 +231,9 @@
             width: 280px;
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid #f1f5f9;
+            border: 1px solid var(--card-border);
             box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.3s;
         }
         .card:hover {
             transform: translateY(-5px);
@@ -216,8 +318,8 @@
             font-size: 0.75rem;
             font-weight: 500;
             color: var(--text-light);
-            background: var(--bg-color);
-            border: 1px solid #e8edf2;
+            background: var(--npm-bg);
+            border: 1px solid var(--npm-border);
             padding: 4px 12px;
             border-radius: 999px;
             letter-spacing: 0.04em;
@@ -229,8 +331,8 @@
             padding: 28px 20px;
             color: var(--text-light);
             font-size: 0.82rem;
-            border-top: 1px solid #e2e8f0;
-            background-color: var(--card-bg);
+            border-top: 1px solid var(--footer-border);
+            background-color: var(--footer-bg);
         }
 
         /* Responsive */
@@ -275,6 +377,19 @@
         <h1>Our Team</h1>
         <p class="hero-sub">Pengantar Keamanan Perangkat Lunak &ensp;·&ensp; Universitas Indonesia</p>
         <div class="divider"></div>
+        {% if is_member %}
+        <div id="editPanel" style="display: inline-flex; align-items: center; gap: 12px; margin-top: -12px;">
+            <span class="member-badge">✦ Team Member</span>
+            <div class="toggle-wrap">
+                <span class="toggle-icon">☀️</span>
+                <label class="toggle-switch" title="Toggle Dark Mode">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-icon">🌙</span>
+            </div>
+        </div>
+        {% endif %}
     </header>
 
     <main class="team-container">
@@ -347,9 +462,29 @@
     </main>
 
     {% if is_member %}
-    <div id="editPanel" style="text-align: center; margin: 0 auto 3rem; max-width: 600px; padding: 0 24px;">
-        <!-- bagian ini untuk fitur ganti warna/font -->
-    </div>
+    <script>
+        (function () {
+            const toggle = document.getElementById('darkModeToggle');
+            const body   = document.body;
+            const STORAGE_KEY = 'tinkerbell_dark_mode';
+
+            // Restore saved preference
+            if (localStorage.getItem(STORAGE_KEY) === 'true') {
+                body.classList.add('dark');
+                toggle.checked = true;
+            }
+
+            toggle.addEventListener('change', function () {
+                if (this.checked) {
+                    body.classList.add('dark');
+                    localStorage.setItem(STORAGE_KEY, 'true');
+                } else {
+                    body.classList.remove('dark');
+                    localStorage.setItem(STORAGE_KEY, 'false');
+                }
+            });
+        })();
+    </script>
     {% endif %}
 
 
