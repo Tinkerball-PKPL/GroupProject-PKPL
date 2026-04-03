@@ -1,11 +1,11 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .oauth_client import SimpleOAuth2Client  # Pastikan file oauth_client.py ada sejajar dengan views.py
+from .oauth_client import SimpleOAuth2Client  
 import urllib.parse
 import secrets
 from django.conf import settings
-# Whitelist email anggota kelompok
+
 TEAM_EMAILS = [
     "nay.kenara@gmail.com",
     "febifey242@gmail.com",
@@ -21,7 +21,6 @@ def is_team_member(email):
 
 def index(request):
     # Nanti diisi Anggota 2 
-    # user_email = request.session.get("user_email")
     user_email = request.session.get("user_email") # placeholder dulu
     
     is_member = is_team_member(user_email)
