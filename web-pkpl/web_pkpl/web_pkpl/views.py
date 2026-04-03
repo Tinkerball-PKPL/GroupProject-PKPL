@@ -21,17 +21,18 @@ def is_team_member(email):
 
 def index(request):
     # Nanti diisi Anggota 2 
-    user_email = request.session.get("user_email") # placeholder dulu
-    
+    user_email = request.session.get("user_email")
+    user_name = request.session.get("user_name")
+
     is_member = is_team_member(user_email)
-    
+
     return render(request, "index.html", {
         "is_member": is_member,
         "user_email": user_email,
+        "user_name": user_name,
     })
 
 def get_oauth_client():
-    # Ganti dengan Client ID dan Secret milikmu
     return SimpleOAuth2Client(
         client_id=settings.GOOGLE_CLIENT_ID, 
         client_secret=settings.GOOGLE_CLIENT_SECRET,
@@ -70,14 +71,14 @@ def callback(request):
     client = get_oauth_client()
     
     try:
-        # Tukarkan code dengan access token (Ini otomatis by-pass terminal browser)
+        # Tukarkan code dengan access token 
         client.get_token(code=code)
         
         # Minta informasi profil (Email & Nama)
         response = client.make_api_request("https://www.googleapis.com/oauth2/v2/userinfo")
         user_info = response.json()
         
-        # SIMPAN EMAIL KE SESSION (Ini yang ditunggu-tunggu Anggota 3!)
+        # SIMPAN EMAIL KE SESSION 
         request.session["user_email"] = user_info.get("email")
         request.session["user_name"] = user_info.get("name")
         
